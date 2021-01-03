@@ -1,4 +1,3 @@
-from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import status
@@ -10,10 +9,11 @@ import requests
 def food_list(request):
     link_food = requests.get('https://stepik.org/media/attachments/course/73594/foodboxes.json')
     foods = link_food.json()
-    d = {}
+
     result = []
 
     for food in foods:
+        d = {}
         d['name'] = food['name']
         d['about'] = food['about']
         d['weight_grams'] = food['weight_grams']
@@ -49,15 +49,16 @@ def food_detail(request, pk):
 def recipient_list(request):
     link_recipient = requests.get('https://stepik.org/media/attachments/course/73594/recipients.json')
     recipients = link_recipient.json()
-    d = {}
     result = []
 
     for recipient in recipients:
+        d = {}
         d = recipient['info']
         d['phoneNumber'] = recipient['contacts']['phoneNumber']
         result.append(d)
 
     return Response(result)
+
 
 
 @api_view(http_method_names=['GET'])
